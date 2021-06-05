@@ -66,6 +66,7 @@ dependencies {
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
     
     //use jar file as api
+    compile files("debugMod/mclib-1.0.4-1.12.2.jar")
     compile files("debugMod/metamorph-1.1.7-1.12.2.jar")
     compile files("debugMod/Baubles-1.12-1.5.2-api.jar")
 }
