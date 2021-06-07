@@ -654,7 +654,7 @@ public class TaskHelper
 		//get target item, put it into furnace
 		//get slots
 		int[] inSlots = InventoryHelper.getSlotsFromSide(furnace, targetStack, taskSide, 0);
-		int[] outSlots = InventoryHelper.getSlotsFromSide(furnace, null, taskSide, 1);
+		int[] outSlots = InventoryHelper.getSlotsFromSide(furnace, ItemStack.EMPTY, taskSide, 1);
 		int[] fuSlots = InventoryHelper.getSlotsFromSide(furnace, fuelStack, taskSide, 2);
 		
 		boolean moved = false;

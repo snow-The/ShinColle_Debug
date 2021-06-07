@@ -859,7 +859,7 @@ public class InventoryHelper
 	/**
 	 * get slots by insert side, item stack and ship's side setting
 	 * 
-	 * stack: target item, null = ignore item
+	 * stack: target item, empty = ignore item
 	 * 
 	 * side: TaskSide from ship
 	 *       0~5 bit for input side: Down, Up, N, S, W, E
@@ -933,7 +933,7 @@ public class InventoryHelper
 	
 	/**
 	 * move itemstack to inv with inv type checking and specified slots
-	 * slots: specified slots, if null = all slots
+	 * slots: specified slots, if empty = all slots
 	 * return true if item moved
 	 */
 	public static boolean moveItemstackToInv(IInventory inv, ItemStack moveitem, int[] toSlots)
@@ -980,7 +980,7 @@ public class InventoryHelper
 	
 	/**
 	 * merge itemstack to slots
-	 * slots: specified slots, if null = all slots
+	 * slots: specified slots, if empty = all slots
 	 */
 	public static boolean mergeItemStack(IInventory inv, ItemStack itemstack, int[] slots)
 	{
