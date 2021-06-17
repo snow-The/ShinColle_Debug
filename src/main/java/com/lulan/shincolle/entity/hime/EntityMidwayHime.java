@@ -82,7 +82,7 @@ public class EntityMidwayHime extends BasicEntityShipCV
   					getStateMinor(ID.M.NumGrudge) > 0)
   				{
   					//apply buff to nearby ships
-  					List<BasicEntityShip> shiplist = this.world.getEntitiesWithinAABB(BasicEntityShip.class, this.getEntityBoundingBox().expand(16D, 16D, 16D));
+  					List<BasicEntityShip> shiplist = this.world.getEntitiesWithinAABB(BasicEntityShip.class, this.getEntityBoundingBox().grow(16D, 16D, 16D));
   					if (shiplist != null && shiplist.size() > 0)
   					{
   						for (BasicEntityShip s : shiplist)

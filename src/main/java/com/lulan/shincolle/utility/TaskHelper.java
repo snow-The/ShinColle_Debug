@@ -1123,7 +1123,7 @@ public class TaskHelper
 			bot = ship.getCapaShipInventory().getStackInSlot(botid);
 			
 			//find xp orb
-			List<EntityXPOrb> getlist = ship.world.getEntitiesWithinAABB(EntityXPOrb.class, ship.getEntityBoundingBox().expand(7D, 7D, 7D));
+			List<EntityXPOrb> getlist = ship.world.getEntitiesWithinAABB(EntityXPOrb.class, ship.getEntityBoundingBox().grow(7D, 7D, 7D));
 			
 			if (getlist.size() > 0)
 			{

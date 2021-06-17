@@ -72,7 +72,7 @@ public class EntityCarrierKaga extends BasicEntityShipCV
   				if (getStateFlag(ID.F.IsMarried) && getStateFlag(ID.F.UseRingEffect) &&
   					getStateMinor(ID.M.NumGrudge) > 0)
   				{
-  					List<BasicEntityShip> shiplist = this.world.getEntitiesWithinAABB(BasicEntityShip.class, this.getEntityBoundingBox().expand(16D, 16D, 16D));
+  					List<BasicEntityShip> shiplist = this.world.getEntitiesWithinAABB(BasicEntityShip.class, this.getEntityBoundingBox().grow(16D, 16D, 16D));
   	  	  			
   					if (shiplist != null && shiplist.size() > 0)
   					{

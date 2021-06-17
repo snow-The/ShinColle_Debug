@@ -178,7 +178,7 @@ public class EntityBattleshipRe extends BasicEntityShipCV
     //find target to push
     private void findTargetPush()
     {
-        AxisAlignedBB impactBox = this.getEntityBoundingBox().expand(12D, 6D, 12D); 
+        AxisAlignedBB impactBox = this.getEntityBoundingBox().grow(12D, 6D, 12D); 
         List<EntityLivingBase> list = this.world.getEntitiesWithinAABB(EntityLivingBase.class, impactBox);
         
         //valid entity
@@ -205,7 +205,7 @@ public class EntityBattleshipRe extends BasicEntityShipCV
     		
             Entity hitEntity = null;
             //range = 3.5D
-            AxisAlignedBB impactBox = target.getEntityBoundingBox().expand(3.5D, 3.5D, 3.5D); 
+            AxisAlignedBB impactBox = target.getEntityBoundingBox().grow(3.5D, 3.5D, 3.5D); 
             List<Entity> hitList = this.world.getEntitiesWithinAABB(Entity.class, impactBox);
             //atk = 20% main target atk
             float atkTemp = atk * 0.2F;

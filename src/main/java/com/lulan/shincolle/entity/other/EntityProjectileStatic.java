@@ -157,7 +157,7 @@ public class EntityProjectileStatic extends Entity implements IShipOwner, IShipA
     			{
     				//判定bounding box內是否有可以觸發爆炸的entity
                     List<Entity> hitList = this.world.getEntitiesWithinAABB(Entity.class,
-                    								this.getEntityBoundingBox().expand(this.range, this.range, this.range));
+                    								this.getEntityBoundingBox().grow(this.range, this.range, this.range));
                     
                     //pull entity whose distance > 1D
                     for (Entity ent : hitList)

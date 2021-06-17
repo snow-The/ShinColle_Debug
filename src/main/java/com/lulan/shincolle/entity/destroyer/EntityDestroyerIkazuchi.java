@@ -246,7 +246,7 @@ public class EntityDestroyerIkazuchi extends BasicEntityShipSmall implements ISh
 			getStateMinor(ID.M.CraneState) == 0)
 		{
 			//get nearby ship
-            List<EntityDestroyerInazuma> slist = this.world.getEntitiesWithinAABB(EntityDestroyerInazuma.class, this.getEntityBoundingBox().expand(4D, 4D, 4D));
+            List<EntityDestroyerInazuma> slist = this.world.getEntitiesWithinAABB(EntityDestroyerInazuma.class, this.getEntityBoundingBox().grow(4D, 4D, 4D));
 
             if (slist != null && !slist.isEmpty())
             {

@@ -167,7 +167,7 @@ public class EntityFloatingFort extends BasicEntityAirplane
 		
 		//calc miss chance, if not miss, calc cri/multi hit
 		//計算範圍爆炸傷害: 判定bounding box內是否有可以吃傷害的entity
-        List<Entity> hitList = this.world.getEntitiesWithinAABB(Entity.class, this.getEntityBoundingBox().expand(4.5D, 4.5D, 4.5D));
+        List<Entity> hitList = this.world.getEntitiesWithinAABB(Entity.class, this.getEntityBoundingBox().grow(4.5D, 4.5D, 4.5D));
         float atk;
         
         //搜尋list, 找出第一個可以判定的目標, 即傳給onImpact

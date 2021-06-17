@@ -358,7 +358,7 @@ public class EntitySSNH extends BasicEntityShipSmall implements IShipInvisible
 		}
 		else
 		{
-	        List<EntityLivingBase> hitList = this.world.getEntitiesWithinAABB(EntityLivingBase.class, this.getEntityBoundingBox().expand(6D, 4D, 6D));
+	        List<EntityLivingBase> hitList = this.world.getEntitiesWithinAABB(EntityLivingBase.class, this.getEntityBoundingBox().grow(6D, 4D, 6D));
 	        
 	        hitList.removeIf(target ->
 	        	!(target instanceof BasicEntityShip || target instanceof EntityPlayer) ||

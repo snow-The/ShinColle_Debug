@@ -601,7 +601,7 @@ public class BuffHelper
 		
 		//check cloud entities
 		List<EntityAreaEffectCloud> getlist = host.world.getEntitiesWithinAABB(
-				EntityAreaEffectCloud.class, host.getEntityBoundingBox().expand(3D, 3D, 3D));
+				EntityAreaEffectCloud.class, host.getEntityBoundingBox().grow(3D, 3D, 3D));
 		
 		if (!getlist.isEmpty())
 		{
@@ -628,7 +628,7 @@ public class BuffHelper
 		
 		//check potion entities
 		List<EntityPotion> getlist2 = host.world.getEntitiesWithinAABB(
-				EntityPotion.class, host.getEntityBoundingBox().expand(3D, 3D, 3D));
+				EntityPotion.class, host.getEntityBoundingBox().grow(3D, 3D, 3D));
 		
 		if (!getlist2.isEmpty())
 		{

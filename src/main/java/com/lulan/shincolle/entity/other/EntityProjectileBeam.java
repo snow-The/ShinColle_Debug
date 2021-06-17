@@ -175,7 +175,7 @@ public class EntityProjectileBeam extends Entity implements IShipOwner, IShipAtt
         	
     		//判定bounding box內是否有可以觸發爆炸的entity
             List<Entity> hitList = this.world.getEntitiesWithinAABB(Entity.class,
-            								this.getEntityBoundingBox().expand(1.5D, 1.5D, 1.5D));
+            								this.getEntityBoundingBox().grow(1.5D, 1.5D, 1.5D));
             
             //搜尋list, 找出可碰撞目標執行onImpact
             for (Entity ent : hitList)

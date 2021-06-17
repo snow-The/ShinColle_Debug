@@ -173,7 +173,7 @@ public class EntityCLTatsutaMob extends BasicEntityShipHostile
 		
 		TargetPoint point = new TargetPoint(this.dimension, this.posX, this.posY, this.posZ, 64D);
 		ArrayList<Entity> list = EntityHelper.getEntitiesWithinAABB(this.world, Entity.class,
-				this.getEntityBoundingBox().expand(4D, 3D, 4D), this.targetSelector);
+				this.getEntityBoundingBox().grow(4D, 3D, 4D), this.targetSelector);
 
 		for (Entity target : list)
 		{
@@ -297,7 +297,7 @@ public class EntityCLTatsutaMob extends BasicEntityShipHostile
 				if (this.remainAttack > 0)
 				{
 					ArrayList<Entity> list = EntityHelper.getEntitiesWithinAABB(this.world, Entity.class,
-							this.getEntityBoundingBox().expand(13D, 13D, 13D), this.targetSelector);
+							this.getEntityBoundingBox().grow(13D, 13D, 13D), this.targetSelector);
 			
 					if (list.size() > 0)
 					{

@@ -791,7 +791,7 @@ public class EntityHelper
             Entity pointedEntity = null;
             
             //從玩家到目標方塊之間, 做出擴展1格的方形collision box, 抓出其中碰到的entity
-            List<Entity> list = viewer.world.getEntitiesWithinAABBExcludingEntity(viewer, viewer.getEntityBoundingBox().grow(vec3x, vec3y, vec3z).expand(1D, 1D, 1D));
+            List<Entity> list = viewer.world.getEntitiesWithinAABBExcludingEntity(viewer, viewer.getEntityBoundingBox().grow(vec3x, vec3y, vec3z).grow(1D, 1D, 1D));
             double d2 = d1;
 
             //檢查抓到的entity, 是否在玩家~目標方塊的視線上
@@ -824,7 +824,7 @@ public class EntityHelper
                 {
                 	//檢查entity大小是否在視線上碰撞到
                     double f2 = entity.getCollisionBorderSize();
-                    AxisAlignedBB targetBox = entity.getEntityBoundingBox().expand(f2, f2, f2);
+                    AxisAlignedBB targetBox = entity.getEntityBoundingBox().grow(f2, f2, f2);
                     RayTraceResult getObj = targetBox.calculateIntercept(vec3, vec32);
 
                     //若viewer完全塞在目標的box裡面

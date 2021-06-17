@@ -192,7 +192,7 @@ public class EntityCLTenryuuMob extends BasicEntityShipHostile
 		
 		TargetPoint point = new TargetPoint(this.dimension, this.posX, this.posY, this.posZ, 64D);
 		ArrayList<Entity> list = EntityHelper.getEntitiesWithinAABB(this.world, Entity.class,
-				this.getEntityBoundingBox().expand(1.5D, 1.5D, 1.5D), this.targetSelector);
+				this.getEntityBoundingBox().grow(1.5D, 1.5D, 1.5D), this.targetSelector);
 
 		for (Entity target : list)
 		{
@@ -314,7 +314,7 @@ public class EntityCLTenryuuMob extends BasicEntityShipHostile
 				if (this.remainAttack > 0)
 				{
 					ArrayList<Entity> list = EntityHelper.getEntitiesWithinAABB(this.world, Entity.class,
-							this.getEntityBoundingBox().expand(8D, 8D, 8D), this.targetSelector);
+							this.getEntityBoundingBox().grow(8D, 8D, 8D), this.targetSelector);
 			
 					if (list.size() > 0)
 					{

@@ -207,13 +207,13 @@ abstract public class BasicEntityAirplane extends BasicEntitySummon implements I
 						//if host Anti-Air, find airplane every 32 ticks
 						if (this.host.getStateFlag(ID.F.AntiAir))
 						{
-							list = this.world.getEntitiesWithinAABB(BasicEntityAirplane.class, this.getEntityBoundingBox().expand(32D, 32D, 32D), this.targetSelector);
+							list = this.world.getEntitiesWithinAABB(BasicEntityAirplane.class, this.getEntityBoundingBox().grow(32D, 32D, 32D), this.targetSelector);
 						}
 						
 						//find new target if "target dead" or "no air target"
 						if (list == null || list.isEmpty())
 						{
-							list = this.world.getEntitiesWithinAABB(Entity.class, this.getEntityBoundingBox().expand(24D, 24D, 24D), this.targetSelector);
+							list = this.world.getEntitiesWithinAABB(Entity.class, this.getEntityBoundingBox().grow(24D, 24D, 24D), this.targetSelector);
 						}
 				        
 				        //get target in list

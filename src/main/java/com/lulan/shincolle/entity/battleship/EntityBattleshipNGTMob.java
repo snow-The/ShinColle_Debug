@@ -198,7 +198,7 @@ public class EntityBattleshipNGTMob extends BasicEntityShipHostile
       		//對範圍造成atk2傷害
   			Entity hitEntity = null;
             double range = 3.5D + this.scaleLevel * 0.5D;
-            AxisAlignedBB impactBox = this.getEntityBoundingBox().expand(range, range, range); 
+            AxisAlignedBB impactBox = this.getEntityBoundingBox().grow(range, range, range); 
             List<Entity> hitList = this.world.getEntitiesWithinAABB(Entity.class, impactBox);
             float atkTemp = atk2;
             

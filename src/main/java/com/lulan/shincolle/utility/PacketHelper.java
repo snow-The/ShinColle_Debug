@@ -879,7 +879,7 @@ public class PacketHelper
     	{
     		//get entity item nearby player
     		float[] data = null;	//k:x, k+1:y, k+2:z
-    		List<BasicEntityItem> getlist = player.world.getEntitiesWithinAABB(BasicEntityItem.class, player.getEntityBoundingBox().expand(128D, 256D, 128D));
+    		List<BasicEntityItem> getlist = player.world.getEntitiesWithinAABB(BasicEntityItem.class, player.getEntityBoundingBox().grow(128D, 256D, 128D));
     		
     		if (getlist.size() > 0)
     		{
