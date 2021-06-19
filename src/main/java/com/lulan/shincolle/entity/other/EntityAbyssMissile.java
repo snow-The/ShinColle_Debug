@@ -393,7 +393,7 @@ public class EntityAbyssMissile extends Entity implements IShipOwner, IShipAttrs
                 }
                 
                 //碰撞判定3: 擴展AABB碰撞: missile擴展1格大小內是否有entity可觸發爆炸
-                List<Entity> hitList = this.world.getEntitiesWithinAABB(Entity.class, this.getEntityBoundingBox().expand(1D, 1.5D, 1D));
+                List<Entity> hitList = this.world.getEntitiesWithinAABB(Entity.class, this.getEntityBoundingBox().grow(1D, 1.5D, 1D));
                 
                 //搜尋list, 找出第一個可以判定的目標, 即傳給onImpact
                 for (Entity ent : hitList)
@@ -618,7 +618,7 @@ public class EntityAbyssMissile extends Entity implements IShipOwner, IShipAttrs
     		
             //計算範圍爆炸傷害: 判定bounding box內是否有可以吃傷害的entity
             List<Entity> hitList = this.world.getEntitiesWithinAABB(Entity.class,
-            						this.getEntityBoundingBox().expand(3.5D, 3.5D, 3.5D));
+            						this.getEntityBoundingBox().grow(3.5D, 3.5D, 3.5D));
             
             //對list中所有可攻擊entity做出傷害判定
             for (Entity ent : hitList)

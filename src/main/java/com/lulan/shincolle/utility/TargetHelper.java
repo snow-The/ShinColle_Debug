@@ -566,7 +566,7 @@ public class TargetHelper
 		{
 			//get ship
 			List<BasicEntityShip> list1 = player.world.getEntitiesWithinAABB(BasicEntityShip.class,
-					player.getEntityBoundingBox().expand(dist, dist, dist));
+					player.getEntityBoundingBox().grow(dist, dist, dist));
 			
 			if (list1 != null && !list1.isEmpty())
 			{
@@ -590,7 +590,7 @@ public class TargetHelper
 		{
 			//get hostile ship
 			List<BasicEntityShipHostile> list1 = host.world.getEntitiesWithinAABB(BasicEntityShipHostile.class,
-					host.getEntityBoundingBox().expand(dist, dist, dist));
+					host.getEntityBoundingBox().grow(dist, dist, dist));
 			
 			if (list1 != null && !list1.isEmpty())
 			{

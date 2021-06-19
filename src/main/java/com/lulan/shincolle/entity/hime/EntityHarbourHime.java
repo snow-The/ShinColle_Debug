@@ -84,7 +84,7 @@ public class EntityHarbourHime extends BasicEntityShipCV
 				{
 					//判定bounding box內是否有可以回血的目標
 					int healCount = this.getLevel() / 50 + 1;
-		            List<EntityLivingBase> hitList = this.world.getEntitiesWithinAABB(EntityLivingBase.class, this.getEntityBoundingBox().expand(12D, 12D, 12D));
+		            List<EntityLivingBase> hitList = this.world.getEntitiesWithinAABB(EntityLivingBase.class, this.getEntityBoundingBox().grow(12D, 12D, 12D));
 		            TargetPoint point = new TargetPoint(this.dimension, this.posX, this.posY, this.posZ, 64D);
 		            
 		            for (EntityLivingBase target : hitList)

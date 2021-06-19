@@ -160,7 +160,7 @@ public class EntityCANe extends BasicEntityShipSmall
     //find target to push
     private void findTargetPush()
     {
-        AxisAlignedBB impactBox = this.getEntityBoundingBox().expand(12D, 6D, 12D); 
+        AxisAlignedBB impactBox = this.getEntityBoundingBox().grow(12D, 6D, 12D); 
         List<EntityLivingBase> list = this.world.getEntitiesWithinAABB(EntityLivingBase.class, impactBox);
         
         //valid entity

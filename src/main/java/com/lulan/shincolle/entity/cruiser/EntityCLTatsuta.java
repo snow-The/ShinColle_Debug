@@ -187,7 +187,7 @@ public class EntityCLTatsuta extends BasicEntityShipSmall
 		float rawatk = this.getAttackBaseDamage(2, null);
 		
 		ArrayList<Entity> list = EntityHelper.getEntitiesWithinAABB(this.world, Entity.class,
-				this.getEntityBoundingBox().expand(4D, 3D, 4D), this.targetSelector);
+				this.getEntityBoundingBox().grow(4D, 3D, 4D), this.targetSelector);
 
 		for (Entity target : list)
 		{
@@ -328,7 +328,7 @@ public class EntityCLTatsuta extends BasicEntityShipSmall
 				if (this.remainAttack > 0)
 				{
 					ArrayList<Entity> list = EntityHelper.getEntitiesWithinAABB(this.world, Entity.class,
-							this.getEntityBoundingBox().expand(16D, 16D, 16D), this.targetSelector);
+							this.getEntityBoundingBox().grow(16D, 16D, 16D), this.targetSelector);
 			
 					if (list.size() > 0)
 					{

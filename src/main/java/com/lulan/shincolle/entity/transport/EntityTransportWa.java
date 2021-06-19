@@ -114,7 +114,7 @@ public class EntityTransportWa extends BasicEntityShipSmall
 		            TargetPoint point = new TargetPoint(this.dimension, this.posX, this.posY, this.posZ, 64D);
 
 		            //get nearby ships
-		            slist = this.world.getEntitiesWithinAABB(BasicEntityShip.class, this.getEntityBoundingBox().expand(range, range, range));
+		            slist = this.world.getEntitiesWithinAABB(BasicEntityShip.class, this.getEntityBoundingBox().grow(range, range, range));
 
 		            for (BasicEntityShip s : slist)
 		            {

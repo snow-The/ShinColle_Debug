@@ -150,7 +150,7 @@ public class MarriageRing extends BasicItem implements IBauble
 				if (inUse && slot != 0 && (entity.ticksExisted & 63) == 0)
 				{
 					//apply shy emotion to nearby ship
-		  			List<BasicEntityShip> slist = world.getEntitiesWithinAABB(BasicEntityShip.class, entity.getEntityBoundingBox().expand(6D, 5D, 6D));
+		  			List<BasicEntityShip> slist = world.getEntitiesWithinAABB(BasicEntityShip.class, entity.getEntityBoundingBox().grow(6D, 5D, 6D));
 
 	              	for (BasicEntityShip s : slist)
 	              	{

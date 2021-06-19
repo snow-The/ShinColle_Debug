@@ -114,7 +114,7 @@ public class EntityBattleshipNGT extends BasicEntityShipSmall
   				if (getStateFlag(ID.F.IsMarried) && getStateFlag(ID.F.UseRingEffect) &&
   					getStateMinor(ID.M.NumGrudge) > 0)
   				{
-  					List<BasicEntityShip> shiplist = this.world.getEntitiesWithinAABB(BasicEntityShip.class, this.getEntityBoundingBox().expand(16D, 16D, 16D));
+  					List<BasicEntityShip> shiplist = this.world.getEntitiesWithinAABB(BasicEntityShip.class, this.getEntityBoundingBox().grow(16D, 16D, 16D));
   	  	  			
   					if (shiplist != null && shiplist.size() > 0)
   					{
@@ -138,7 +138,7 @@ public class EntityBattleshipNGT extends BasicEntityShipSmall
   		if (host.isMorph()) return;
   		
 		//get nearby ship
-		List<EntityLivingBase> slist = host.world.getEntitiesWithinAABB(EntityLivingBase.class, host.getEntityBoundingBox().expand(16D, 12D, 16D));
+		List<EntityLivingBase> slist = host.world.getEntitiesWithinAABB(EntityLivingBase.class, host.getEntityBoundingBox().grow(16D, 12D, 16D));
 		List<EntityLivingBase> target = new ArrayList<EntityLivingBase>();
 		
 		if (slist != null && !slist.isEmpty())
@@ -282,7 +282,7 @@ public class EntityBattleshipNGT extends BasicEntityShipSmall
       		
       		//對範圍造成atk2傷害
             Entity hitEntity = null;
-            AxisAlignedBB impactBox = this.getEntityBoundingBox().expand(3.5D, 3.5D, 3.5D); 
+            AxisAlignedBB impactBox = this.getEntityBoundingBox().grow(3.5D, 3.5D, 3.5D); 
             List<Entity> hitList = this.world.getEntitiesWithinAABB(Entity.class, impactBox);
             float atkTemp = atk2;
             

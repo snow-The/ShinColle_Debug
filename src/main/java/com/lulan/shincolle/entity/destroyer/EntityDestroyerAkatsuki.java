@@ -273,7 +273,7 @@ public class EntityDestroyerAkatsuki extends BasicEntityShipSmall implements ISh
   			getStateMinor(ID.M.CraneState) == 0 && getStateMinor(ID.M.FormatType) == 1)
   		{
   			//get nearby ship
-  			List<BasicEntityShip> slist = this.world.getEntitiesWithinAABB(BasicEntityShip.class, this.getEntityBoundingBox().expand(6D, 5D, 6D));
+  			List<BasicEntityShip> slist = this.world.getEntitiesWithinAABB(BasicEntityShip.class, this.getEntityBoundingBox().grow(6D, 5D, 6D));
   			BasicEntityShip getHibiki = null;
   			BasicEntityShip getInazuma = null;
   			BasicEntityShip getIkazuchi = null;

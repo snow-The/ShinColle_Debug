@@ -191,7 +191,7 @@ public class EntityAIShipPickItem extends EntityAIBase
         List<EntityItem> getlist = null;
         
         getlist = this.hostShip.world.getEntitiesWithinAABB(EntityItem.class, 
-        			this.hostShip.getEntityBoundingBox().expand(this.pickRange, this.pickRange * 0.5F + 1F, this.pickRange));
+        			this.hostShip.getEntityBoundingBox().grow(this.pickRange, this.pickRange * 0.5F + 1F, this.pickRange));
         
         //get random item
         if (getlist != null && !getlist.isEmpty())

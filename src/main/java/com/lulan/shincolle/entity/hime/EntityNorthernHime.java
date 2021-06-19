@@ -105,7 +105,7 @@ public class EntityNorthernHime extends BasicEntityShipCV
 				{
 					//判定bounding box內是否有可以回血的目標
 					int healCount = this.getLevel() / 25 + 1;
-		            List<EntityLivingBase> hitList = this.world.getEntitiesWithinAABB(EntityLivingBase.class, this.getEntityBoundingBox().expand(8D, 8D, 8D));
+		            List<EntityLivingBase> hitList = this.world.getEntitiesWithinAABB(EntityLivingBase.class, this.getEntityBoundingBox().grow(8D, 8D, 8D));
 		            TargetPoint point = new TargetPoint(this.dimension, this.posX, this.posY, this.posZ, 64D);
 		            
 		            for (EntityLivingBase target : hitList)
@@ -246,7 +246,7 @@ public class EntityNorthernHime extends BasicEntityShipCV
 		}
 		else
 		{
-	        List<EntityLivingBase> hitList = this.world.getEntitiesWithinAABB(EntityLivingBase.class, this.getEntityBoundingBox().expand(6D, 4D, 6D));
+	        List<EntityLivingBase> hitList = this.world.getEntitiesWithinAABB(EntityLivingBase.class, this.getEntityBoundingBox().grow(6D, 4D, 6D));
 	        
 	        hitList.removeIf(target ->
 	        	!(target instanceof BasicEntityShip || target instanceof EntityPlayer) ||

@@ -336,7 +336,7 @@ public class EntityAIShipGuarding extends EntityAIBase
 	//find target
 	private void findTarget()
 	{
-		List<EntityLivingBase> list1 = this.host2.world.getEntitiesWithinAABB(EntityLivingBase.class, this.host2.getEntityBoundingBox().expand(this.range * 0.9D, this.range * 0.6D, this.range * 0.9D), this.targetSelector);
+		List<EntityLivingBase> list1 = this.host2.world.getEntitiesWithinAABB(EntityLivingBase.class, this.host2.getEntityBoundingBox().grow(this.range * 0.9D, this.range * 0.6D, this.range * 0.9D), this.targetSelector);
         
         //sort target list
         Collections.sort(list1, this.targetSorter);

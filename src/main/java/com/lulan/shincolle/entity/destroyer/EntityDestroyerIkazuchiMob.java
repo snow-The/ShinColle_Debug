@@ -132,7 +132,7 @@ public class EntityDestroyerIkazuchiMob extends BasicEntityShipHostile implement
   		if (this.isRaiden) return;
 		
 		//get nearby ship
-        List<EntityDestroyerInazumaMob> slist = this.world.getEntitiesWithinAABB(EntityDestroyerInazumaMob.class, this.getEntityBoundingBox().expand(16D, 8D, 16D));
+        List<EntityDestroyerInazumaMob> slist = this.world.getEntitiesWithinAABB(EntityDestroyerInazumaMob.class, this.getEntityBoundingBox().grow(16D, 8D, 16D));
 
         if (slist != null && !slist.isEmpty())
         {

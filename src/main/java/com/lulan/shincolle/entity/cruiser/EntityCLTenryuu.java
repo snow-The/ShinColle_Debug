@@ -209,7 +209,7 @@ public class EntityCLTenryuu extends BasicEntityShipSmall
 		float rawatk = this.getAttackBaseDamage(this.StateEmotion[ID.S.Phase] == 2 ? 2 : 3, null);
 		
 		ArrayList<Entity> list = EntityHelper.getEntitiesWithinAABB(this.world, Entity.class,
-				this.getEntityBoundingBox().expand(2D, 1.5D, 2D), this.targetSelector);
+				this.getEntityBoundingBox().grow(2D, 1.5D, 2D), this.targetSelector);
 
 		for (Entity target : list)
 		{
@@ -350,7 +350,7 @@ public class EntityCLTenryuu extends BasicEntityShipSmall
 				if (this.remainAttack > 0)
 				{
 					ArrayList<Entity> list = EntityHelper.getEntitiesWithinAABB(this.world, Entity.class,
-							this.getEntityBoundingBox().expand(10D, 10D, 10D), this.targetSelector);
+							this.getEntityBoundingBox().grow(10D, 10D, 10D), this.targetSelector);
 			
 					if (list.size() > 0)
 					{
