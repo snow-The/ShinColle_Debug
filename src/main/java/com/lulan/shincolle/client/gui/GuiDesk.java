@@ -205,8 +205,8 @@ public class GuiDesk extends GuiContainer
 		this.listClicked = new int[] {-1, -1, -1, -1, -1};
 		
 		//radar
-		this.shipList = new ArrayList();
-		this.itemList = new ArrayList();
+		this.shipList = new ArrayList<RadarEntity>();
+		this.itemList = new ArrayList<RadarEntity>();
 		
 		//team
 		this.teamState = 0;
@@ -221,15 +221,15 @@ public class GuiDesk extends GuiContainer
 		//ship model
 		setShipModel(this.book_chapNum, this.book_pageNum);
 		
-        //add text input field
-        Keyboard.enableRepeatEvents(true);
-        
-        //string
-        StrPos = I18n.format("gui.shincolle:radar.position");
-        StrHeight = I18n.format("gui.shincolle:radar.height");
-        StrTeamID = I18n.format("gui.shincolle:team.teamid");	
-        StrBreak = I18n.format("gui.shincolle:team.break");
-        StrAlly = I18n.format("gui.shincolle:team.ally");
+		//add text input field
+		Keyboard.enableRepeatEvents(true);
+		
+		//string
+		StrPos = I18n.format("gui.shincolle:radar.position");
+		StrHeight = I18n.format("gui.shincolle:radar.height");
+		StrTeamID = I18n.format("gui.shincolle:team.teamid");	
+		StrBreak = I18n.format("gui.shincolle:team.break");
+		StrAlly = I18n.format("gui.shincolle:team.ally");
 		StrOK = I18n.format("gui.shincolle:general.ok");
 		StrUnban = I18n.format("gui.shincolle:team.unban");
 		StrBan = I18n.format("gui.shincolle:team.ban");
@@ -249,25 +249,25 @@ public class GuiDesk extends GuiContainer
 	//有用到fontRenderer的必須放在此init
 	@Override
 	public void initGui()
-    {
+	{
 		super.initGui();
 		
-        //textField: font, x, y, width, height
-        this.textField = new GuiTextField(1, this.fontRenderer, (int)((this.guiLeft+10)*this.GuiScale), (int)((this.guiTop+24)*this.GuiScale), 153, 12);
-        this.textField.setTextColor(-1);					//點選文字框時文字顏色
-        this.textField.setDisabledTextColour(-1);			//無點選文字框時文字顏色
-        this.textField.setEnableBackgroundDrawing(true);	//畫出文字框背景
-        this.textField.setMaxStringLength(64);				//接受最大文字長度
-        this.textField.setEnabled(false);
-        this.textField.setFocused(false);
-    }
+		//textField: font, x, y, width, height
+		this.textField = new GuiTextField(1, this.fontRenderer, (int)((this.guiLeft+10)*this.GuiScale), (int)((this.guiTop+24)*this.GuiScale), 153, 12);
+		this.textField.setTextColor(-1);					//點選文字框時文字顏色
+		this.textField.setDisabledTextColour(-1);			//無點選文字框時文字顏色
+		this.textField.setEnableBackgroundDrawing(true);	//畫出文字框背景
+		this.textField.setMaxStringLength(64);				//接受最大文字長度
+		this.textField.setEnabled(false);
+		this.textField.setFocused(false);
+	}
 	
 	private void updateDeskValue()
 	{
 		this.guiFunc = this.tile.getField(0);
-  		this.book_chapNum = this.tile.getField(1);
-  		this.book_pageNum = this.tile.getField(2);
-  		this.radar_zoomLv = this.tile.getField(3);
+		this.book_chapNum = this.tile.getField(1);
+		this.book_pageNum = this.tile.getField(2);
+		this.radar_zoomLv = this.tile.getField(3);
 	}
 	
 	//get new mouseX,Y and redraw gui
@@ -289,18 +289,18 @@ public class GuiDesk extends GuiContainer
 		GlStateManager.pushMatrix();
 		GlStateManager.disableLighting();
 		GlStateManager.disableBlend();
-        
-        if (this.teamState == TEAMSTATE_CREATE || this.teamState == TEAMSTATE_RENAME)
-        {
-        	this.textField.setEnabled(true);
-        	this.textField.drawTextBox();
-        }
-        else
-        {
-        	this.textField.setEnabled(false);
-        }
-        
-        GlStateManager.popMatrix();
+		
+		if (this.teamState == TEAMSTATE_CREATE || this.teamState == TEAMSTATE_RENAME)
+		{
+			this.textField.setEnabled(true);
+			this.textField.drawTextBox();
+		}
+		else
+		{
+			this.textField.setEnabled(false);
+		}
+		
+		GlStateManager.popMatrix();
 	}
 	
 	//draw tooltip
@@ -316,7 +316,7 @@ public class GuiDesk extends GuiContainer
 		{
 		case 1:  /** radar */
 			//draw ship name
-			List list = new ArrayList();
+			List<String> list = new ArrayList<String>();
 			
 			for (RadarEntity obj : this.shipList)
 			{
@@ -335,7 +335,7 @@ public class GuiDesk extends GuiContainer
 				if (ship != null)
 				{
 					String strName = obj.name;
-	    			list.add(strName);  //add string to draw list
+					list.add(strName);  //add string to draw list
 				}
 			}//end for all obj in shipList
 			
@@ -358,47 +358,47 @@ public class GuiDesk extends GuiContainer
 			
 			drawHoveringText(list, mx, my, this.fontRenderer);
 		break;  //end radar
-		case 2:     /** book */
+		case 2:	 /** book */
 			int getbtn = GuiHelper.getButton(ID.Gui.ADMIRALDESK, 2, mx, my);
 
 			//get chap text
-        	if (getbtn > 1 && getbtn < 9)
-        	{
-        		getbtn -= 2;
-        		String strChap = I18n.format("gui.shincolle:book.chap"+getbtn+".title");
-        		List list2 = CalcHelper.stringConvNewlineToList(strChap);
-        		int strLen = this.fontRenderer.getStringWidth(strChap);
-        		drawHoveringText(list2, mx-strLen-20, my, this.fontRenderer);
-        	}
-        	//get item text
-        	else
-        	{
-        		int id = GuiBook.getIndexID(this.book_chapNum, this.book_pageNum);
-        		List<int[]> cont = Values.BookList.get(id);
-        		
-        		if (cont != null)
-        		{
-        			for (int[] getc : cont)
-        			{
-        				if (getc != null && getc.length == 5 && getc[0] == 2 &&
-        					(getc[1] == GuiBook.PageLeftCurrent || getc[1] == GuiBook.PageRightCurrent))
-        				{
-        					int xa = getc[2] + GuiBook.Page0LX - 1;              //at left page
-        					if ((getc[1] & 1) == 1) xa = getc[2] + GuiBook.Page0RX - 1;  //at right page
-        					int xb = xa + 16;
-        					int ya = getc[3] + GuiBook.Page0Y;
-        					int yb = ya + 16;
-        					ItemStack item = GuiBook.getItemStackForIcon(getc[4]);
-        					
-        					if (mx > xa-1 && mx < xb+1 && my > ya-1 && my < yb+1)
-        					{
-        						this.renderToolTip(item, mx, my);
-        						break;
-        					}
-        				}
-        			}//end for book content
-        		}//end if book content
-        	}
+			if (getbtn > 1 && getbtn < 9)
+			{
+				getbtn -= 2;
+				String strChap = I18n.format("gui.shincolle:book.chap"+getbtn+".title");
+				List<String> list2 = CalcHelper.stringConvNewlineToList(strChap);
+				int strLen = this.fontRenderer.getStringWidth(strChap);
+				drawHoveringText(list2, mx-strLen-20, my, this.fontRenderer);
+			}
+			//get item text
+			else
+			{
+				int id = GuiBook.getIndexID(this.book_chapNum, this.book_pageNum);
+				List<int[]> cont = Values.BookList.get(id);
+				
+				if (cont != null)
+				{
+					for (int[] getc : cont)
+					{
+						if (getc != null && getc.length == 5 && getc[0] == 2 &&
+							(getc[1] == GuiBook.PageLeftCurrent || getc[1] == GuiBook.PageRightCurrent))
+						{
+							int xa = getc[2] + GuiBook.Page0LX - 1;			  //at left page
+							if ((getc[1] & 1) == 1) xa = getc[2] + GuiBook.Page0RX - 1;  //at right page
+							int xb = xa + 16;
+							int ya = getc[3] + GuiBook.Page0Y;
+							int yb = ya + 16;
+							ItemStack item = GuiBook.getItemStackForIcon(getc[4]);
+							
+							if (mx > xa-1 && mx < xb+1 && my > ya-1 && my < yb+1)
+							{
+								this.renderToolTip(item, mx, my);
+								break;
+							}
+						}
+					}//end for book content
+				}//end if book content
+			}
 		break;  //end book
 		}//end func switch
 	}
@@ -457,117 +457,117 @@ public class GuiDesk extends GuiContainer
 	{
 		//reset color
 		GlStateManager.color(1F, 1F, 1F, 1F);
-        Minecraft.getMinecraft().getTextureManager().bindTexture(guiTexture);
-        
-        //若gui貼圖不為256x256, 則使用以下兩個方法畫貼圖
-        //func_146110_a(x, y, u, v, xSize, ySize, textXSize, textYSize)
-        //func_152125_a(x, y, u, v, xSize, ySize, drawXSize, drawYSize textXSize, textYSize)
-        if (this.type == 0)
-        {
-        	drawTexturedModalRect(guiLeft, guiTop, 0, 0, 256, 192);
-        	
-        	//get new value
-        	updateDeskValue();
-      		
-      		//畫出功能按鈕
-            switch (this.guiFunc)
-            {
-            case 1:		//radar
-            	drawTexturedModalRect(guiLeft+3, guiTop+2, 0, 192, 16, 16);
-            break;
-            case 2:		//book
-            	drawTexturedModalRect(guiLeft+22, guiTop+2, 16, 192, 16, 16);
-            break;
-            case 3:		//team
-            	drawTexturedModalRect(guiLeft+41, guiTop+2, 32, 192, 16, 16);
-            break;
-            case 4:		//target
-            	drawTexturedModalRect(guiLeft+60, guiTop+2, 48, 192, 16, 16);
-            break;
-            }
+		Minecraft.getMinecraft().getTextureManager().bindTexture(guiTexture);
+		
+		//若gui貼圖不為256x256, 則使用以下兩個方法畫貼圖
+		//func_146110_a(x, y, u, v, xSize, ySize, textXSize, textYSize)
+		//func_152125_a(x, y, u, v, xSize, ySize, drawXSize, drawYSize textXSize, textYSize)
+		if (this.type == 0)
+		{
+			drawTexturedModalRect(guiLeft, guiTop, 0, 0, 256, 192);
+			
+			//get new value
+			updateDeskValue();
+	  		
+	  		//畫出功能按鈕
+			switch (this.guiFunc)
+			{
+			case 1:		//radar
+				drawTexturedModalRect(guiLeft+3, guiTop+2, 0, 192, 16, 16);
+			break;
+			case 2:		//book
+				drawTexturedModalRect(guiLeft+22, guiTop+2, 16, 192, 16, 16);
+			break;
+			case 3:		//team
+				drawTexturedModalRect(guiLeft+41, guiTop+2, 32, 192, 16, 16);
+			break;
+			case 4:		//target
+				drawTexturedModalRect(guiLeft+60, guiTop+2, 48, 192, 16, 16);
+			break;
+			}
 		}
-        
-        //畫出功能介面
-        switch (this.guiFunc)
-        {
-        case 1:		//radar
-        	//background
-        	Minecraft.getMinecraft().getTextureManager().bindTexture(guiRadar);
-        	drawTexturedModalRect(guiLeft, guiTop, 0, 0, 256, 192);
-        	
-        	//draw zoom level button
-        	int texty = 192;
-        	switch (this.radar_zoomLv)
-        	{
-        	case 1:
-        		texty = 200;
-        	break;
-        	case 2:
-        		texty = 208;
-        	break;
-        	}
-        	drawTexturedModalRect(guiLeft+9, guiTop+160, 24, texty, 44, 8);
-        	
-        	//draw ship clicked circle
-        	if (this.listClicked[LISTCLICK_RADAR] > -1 && this.listClicked[LISTCLICK_RADAR] < 5)
-        	{
-        		int cirY = 25 + this.listClicked[LISTCLICK_RADAR] * 32;
-            	drawTexturedModalRect(guiLeft+142, guiTop+cirY, 68, 192, 108, 31);
-        	}
-        	
-        	//draw radar ship icon
-        	drawRadarIcon();
-        	
-        	//draw morale icon
-        	drawMoraleIcon();
-        	
-        break;		//end radar
-        case 2:		//book
-        	//background
-        	Minecraft.getMinecraft().getTextureManager().bindTexture(guiBook);
-        	drawTexturedModalRect(guiLeft, guiTop, 0, 0, 256, 192);
-        	
-        	//if mouse on page button, change button color
-    		if (xMouse < guiLeft + 137 * this.GuiScale)
-    		{
-    			drawTexturedModalRect(guiLeft+53, guiTop+182, 0, 192, 18, 10);
-    		}
-    		else
-    		{
-    			drawTexturedModalRect(guiLeft+175, guiTop+182, 0, 202, 18, 10);
-    		}
-    		
-    		//draw ship model if chap = 4,5
-    		if (this.book_pageNum > 0 && (this.book_chapNum == 4 || this.book_chapNum == 5))
-    		{
-    			drawShipModel();
-    		}
-    		
-        break;  	//end book
-        case 3:		//team
-        	//background
-        	Minecraft.getMinecraft().getTextureManager().bindTexture(guiTeam);
-        	drawTexturedModalRect(guiLeft, guiTop, 0, 0, 256, 192);
-        	drawTeamPic();
-        	
-        break;		//end team
-        case 4:		//target
-        	//background
-        	Minecraft.getMinecraft().getTextureManager().bindTexture(guiTarget);
-        	drawTexturedModalRect(guiLeft, guiTop, 0, 0, 256, 192);
-        	
-        	//draw ship clicked circle
-        	if (this.listClicked[LISTCLICK_TARGET] > -1 && this.listClicked[LISTCLICK_TARGET] < 13)
-        	{
-        		int cirY = 25 + this.listClicked[LISTCLICK_TARGET] * 12;
-            	drawTexturedModalRect(guiLeft+142, guiTop+cirY, 68, 192, 108, 31);
-        	}
-        	
-        	//draw target model
-        	drawTargetModel();
-        	
-        break;	//end target
-        }//end switch
+		
+		//畫出功能介面
+		switch (this.guiFunc)
+		{
+		case 1:		//radar
+			//background
+			Minecraft.getMinecraft().getTextureManager().bindTexture(guiRadar);
+			drawTexturedModalRect(guiLeft, guiTop, 0, 0, 256, 192);
+			
+			//draw zoom level button
+			int texty = 192;
+			switch (this.radar_zoomLv)
+			{
+			case 1:
+				texty = 200;
+			break;
+			case 2:
+				texty = 208;
+			break;
+			}
+			drawTexturedModalRect(guiLeft+9, guiTop+160, 24, texty, 44, 8);
+			
+			//draw ship clicked circle
+			if (this.listClicked[LISTCLICK_RADAR] > -1 && this.listClicked[LISTCLICK_RADAR] < 5)
+			{
+				int cirY = 25 + this.listClicked[LISTCLICK_RADAR] * 32;
+				drawTexturedModalRect(guiLeft+142, guiTop+cirY, 68, 192, 108, 31);
+			}
+			
+			//draw radar ship icon
+			drawRadarIcon();
+			
+			//draw morale icon
+			drawMoraleIcon();
+			
+		break;		//end radar
+		case 2:		//book
+			//background
+			Minecraft.getMinecraft().getTextureManager().bindTexture(guiBook);
+			drawTexturedModalRect(guiLeft, guiTop, 0, 0, 256, 192);
+			
+			//if mouse on page button, change button color
+			if (xMouse < guiLeft + 137 * this.GuiScale)
+			{
+				drawTexturedModalRect(guiLeft+53, guiTop+182, 0, 192, 18, 10);
+			}
+			else
+			{
+				drawTexturedModalRect(guiLeft+175, guiTop+182, 0, 202, 18, 10);
+			}
+			
+			//draw ship model if chap = 4,5
+			if (this.book_pageNum > 0 && (this.book_chapNum == 4 || this.book_chapNum == 5))
+			{
+				drawShipModel();
+			}
+			
+		break;  	//end book
+		case 3:		//team
+			//background
+			Minecraft.getMinecraft().getTextureManager().bindTexture(guiTeam);
+			drawTexturedModalRect(guiLeft, guiTop, 0, 0, 256, 192);
+			drawTeamPic();
+			
+		break;		//end team
+		case 4:		//target
+			//background
+			Minecraft.getMinecraft().getTextureManager().bindTexture(guiTarget);
+			drawTexturedModalRect(guiLeft, guiTop, 0, 0, 256, 192);
+			
+			//draw ship clicked circle
+			if (this.listClicked[LISTCLICK_TARGET] > -1 && this.listClicked[LISTCLICK_TARGET] < 13)
+			{
+				int cirY = 25 + this.listClicked[LISTCLICK_TARGET] * 12;
+				drawTexturedModalRect(guiLeft+142, guiTop+cirY, 68, 192, 108, 31);
+			}
+			
+			//draw target model
+			drawTargetModel();
+			
+		break;	//end target
+		}//end switch
 	}
 	
 	//mouse input
@@ -702,330 +702,330 @@ public class GuiDesk extends GuiContainer
 	@Override
 	protected void mouseClicked(int posX, int posY, int mouseKey) throws IOException
 	{
-        super.mouseClicked(posX, posY, mouseKey);
-        
-        //set focus for textField, CHECK BEFORE GUI SCALE!!
-        this.textField.mouseClicked(posX, posY, mouseKey);
-        
-        //gui scale
-        posX = (int)(posX * this.GuiScaleInv);
-        posY = (int)(posY * this.GuiScaleInv);
-        xClick = posX - this.guiLeft;
-        yClick = posY - this.guiTop;
-        
-        //match all pages
-        if (this.type == 0)
-        {
-        	int getFunc = GuiHelper.getButton(ID.Gui.ADMIRALDESK, 0, xClick, yClick);
-            setDeskFunction(getFunc);
-        }
-        
-        //match radar page
-        switch (this.guiFunc)
-        {
-        case 1:     //radar
-        	int radarBtn = GuiHelper.getButton(ID.Gui.ADMIRALDESK, 1, xClick, yClick);
-        	switch (radarBtn)
-        	{
-            case 0:	//radar scale
-            	this.radar_zoomLv++;
-            	if (this.radar_zoomLv > 2) this.radar_zoomLv = 0;
-            break;
-            case 1: //ship slot 0~5
-            case 2:
-            case 3:
-            case 4:
-            case 5:
-            	int oldClick = this.listClicked[LISTCLICK_RADAR];
-            	this.listClicked[LISTCLICK_RADAR] = radarBtn - 1;
-            	
-            	//if click same slot, open ship GUI
-            	if (oldClick == this.listClicked[LISTCLICK_RADAR]) this.openShipGUI();
-            break;
-            }//end switch
-        break;  	//end radar
-        case 2:     //book
-        	int getbtn2 = -1;
-        	
-        	if (this.book_chapNum == 4 || this.book_chapNum == 5)
-        	{
-        		getbtn2 = GuiHelper.getButton(ID.Gui.ADMIRALDESK, 5, xClick, yClick);
-        		
-        		//protected area for model state buttons
-        		if (getbtn2 < 0 && xClick > 15 && xClick < 115 && yClick > 150 && yClick < 180)
-        		{
-        			getbtn2 = 0;
-        		}
-        	}
+		super.mouseClicked(posX, posY, mouseKey);
+		
+		//set focus for textField, CHECK BEFORE GUI SCALE!!
+		this.textField.mouseClicked(posX, posY, mouseKey);
+		
+		//gui scale
+		posX = (int)(posX * this.GuiScaleInv);
+		posY = (int)(posY * this.GuiScaleInv);
+		xClick = posX - this.guiLeft;
+		yClick = posY - this.guiTop;
+		
+		//match all pages
+		if (this.type == 0)
+		{
+			int getFunc = GuiHelper.getButton(ID.Gui.ADMIRALDESK, 0, xClick, yClick);
+			setDeskFunction(getFunc);
+		}
+		
+		//match radar page
+		switch (this.guiFunc)
+		{
+		case 1:	 //radar
+			int radarBtn = GuiHelper.getButton(ID.Gui.ADMIRALDESK, 1, xClick, yClick);
+			switch (radarBtn)
+			{
+			case 0:	//radar scale
+				this.radar_zoomLv++;
+				if (this.radar_zoomLv > 2) this.radar_zoomLv = 0;
+			break;
+			case 1: //ship slot 0~5
+			case 2:
+			case 3:
+			case 4:
+			case 5:
+				int oldClick = this.listClicked[LISTCLICK_RADAR];
+				this.listClicked[LISTCLICK_RADAR] = radarBtn - 1;
+				
+				//if click same slot, open ship GUI
+				if (oldClick == this.listClicked[LISTCLICK_RADAR]) this.openShipGUI();
+			break;
+			}//end switch
+		break;  	//end radar
+		case 2:	 //book
+			int getbtn2 = -1;
+			
+			if (this.book_chapNum == 4 || this.book_chapNum == 5)
+			{
+				getbtn2 = GuiHelper.getButton(ID.Gui.ADMIRALDESK, 5, xClick, yClick);
+				
+				//protected area for model state buttons
+				if (getbtn2 < 0 && xClick > 15 && xClick < 115 && yClick > 150 && yClick < 180)
+				{
+					getbtn2 = 0;
+				}
+			}
 
-        	//get no button in ch5, check ch2 button
-        	if(getbtn2 < 0)
-        	{
-        		int getbtn = GuiHelper.getButton(ID.Gui.ADMIRALDESK, 2, xClick, yClick);
-            	switch (getbtn)
-            	{
-                case 0:	//left
-                	if (mouseKey == 0)
-                	{
-                		this.book_pageNum--;
-                	}
-                	else
-                	{
-                		this.book_pageNum -= 10;
-                	}
-                	
-                	if (this.book_pageNum < 0) this.book_pageNum = 0;
-    	  	  		
-                	setShipModel(this.book_chapNum, this.book_pageNum);
-                	LogHelper.debug("DEBUG: desk: book page: "+book_pageNum);
-                break;
-                case 1: //right
-                	if (mouseKey == 0)
-                	{
-                		this.book_pageNum++;
-                	}
-                	else
-                	{
-                		this.book_pageNum += 10;
-                	}
-                	
-                	if (this.book_pageNum > GuiBook.getMaxPageNumber(book_chapNum))
-                	{
-                		this.book_pageNum = GuiBook.getMaxPageNumber(book_chapNum);
-                	}
-    	  	  		
-                	setShipModel(this.book_chapNum, this.book_pageNum);
-                	LogHelper.debug("DEBUG: desk: book page: "+book_pageNum);
-                break;
-                case 2: //chap 0
-                case 3: //chap 1
-                case 4: //chap 2
-                case 5: //chap 3
-                case 6: //chap 4
-                case 7: //chap 5
-                case 8: //chap 6
-                	this.book_chapNum = getbtn - 2;
-                	this.book_pageNum = 0;
-                	LogHelper.debug("DEBUG: desk: book chap: "+book_chapNum);
-                break;
-                }
-        	}
-        	//get ship model button
-        	else
-        	{
-        		if (this.shipModel != null)
-        		{
-        			switch (getbtn2)
-        			{
-            		case 0:  //ship model
-            		break;
-            		case 1:  //sit
-            			this.shipModel.setSitting(!this.shipModel.isSitting());
-            			
-            			//roll Emotion
-            			if (this.shipModel.getRNG().nextInt(2) == 0)
-            			{
-            				this.shipModel.setStateEmotion(ID.S.Emotion, ID.Emotion.BORED, false);
-            			}
-            			else
-            			{
-            				this.shipModel.setStateEmotion(ID.S.Emotion, ID.Emotion.NORMAL, false);
-            			}
-            			
-            			//roll Emotion4
-            			if (this.shipModel.getRNG().nextInt(2) == 0)
-            			{
-            				this.shipModel.setStateEmotion(ID.S.Emotion4, ID.Emotion.BORED, false);
-            			}
-            			else
-            			{
-            				this.shipModel.setStateEmotion(ID.S.Emotion4, ID.Emotion.NORMAL, false);
-            			}
-            		break;
-            		case 2:  //run
-            			this.shipModel.setSprinting(!this.shipModel.isSprinting());
-            			if (this.shipMount != null) this.shipMount.setSprinting(this.shipModel.isSprinting());
-            		break;
-            		case 3:  //attack
-            			this.shipModel.setAttackTick(50);
-            			this.shipModel.setStateEmotion(ID.S.Phase, this.shipModel.getRNG().nextInt(4), false);
-            			if (this.shipMount != null) this.shipMount.setAttackTick(50);
-            		break;
-            		case 4:  //emotion
-            			//roll Emotion4
-            			if (this.shipModel.getRNG().nextInt(2) == 0)
-            			{
-            				this.shipModel.setStateEmotion(ID.S.Emotion4, ID.Emotion.BORED, false);
-            			}
-            			else
-            			{
-            				this.shipModel.setStateEmotion(ID.S.Emotion4, ID.Emotion.NORMAL, false);
-            			}
-            			
-            			//roll sneaking
-            			this.shipModel.setSneaking(this.shipModel.getRNG().nextInt(5) == 0);
-            			
-            			//roll Emotion/NoFuel
-            			if (this.shipModel.getRNG().nextInt(8) == 0)
-            			{
-            				this.shipModel.setStateFlag(ID.F.NoFuel, true);
-            			}
-            			else
-            			{
-            				this.shipModel.setStateFlag(ID.F.NoFuel, false);
-            				this.shipModel.setStateEmotion(ID.S.Emotion, this.shipModel.getRNG().nextInt(10), false);
-                			if (this.shipMount != null) this.shipMount.setStateEmotion(ID.S.Emotion, this.shipMount.getRNG().nextInt(10), false);
-            			}
-            		break;
-            		case 5:  //model state 1~16
-            		case 6:
-            		case 7:
-            		case 8:
-            		case 9:
-            		case 10:
-            		case 11:
-            		case 12:
-            		case 13:
-            		case 14:
-            		case 15:
-            		case 16:
-            		case 17:
-            		case 18:
-            		case 19:
-            		case 20:
-            			this.shipModel.setStateEmotion(ID.S.State, this.shipModel.getStateEmotion(ID.S.State) ^ Values.N.Pow2[getbtn2-5], false);
-            			
-            			//set mounts
-            			if (this.shipModel.hasShipMounts()) this.setShipMount();
-            		break;
-            		}//end switch
-        		}//end get ship model
-        	}//end get ship model page button
-        break;  //end book
-        case 3:		//team
-        	int teamBtn = GuiHelper.getButton(ID.Gui.ADMIRALDESK, 3, xClick, yClick);
-        	switch (teamBtn)
-        	{
-            case 0:	//left top button
-            	switch (this.teamState)
-            	{
-            	case TEAMSTATE_MAIN:
-            		handleClickTeamMain(0);
-        		break;
-            	case TEAMSTATE_ALLY:
-            		handleClickTeamAlly(0);
-            	break;
-            	case TEAMSTATE_BAN:
-            		handleClickTeamBan(0);
-            	break;
-            	case TEAMSTATE_CREATE:
-            		handleClickTeamCreate(0);
-            	break;
-            	case TEAMSTATE_RENAME:
-            		handleClickTeamRename(0);
-            	break;
-            	}//end switch
-            break;
-            case 1: //team slot 0~4
-            case 2:
-            case 3:
-            case 4:
-            case 5:
-            	this.listFocus = LISTCLICK_TEAM;
-            	this.listClicked[LISTCLICK_TEAM] = teamBtn - 1;
-            break;
-            case 6: //left bottom button
-            	switch (this.teamState)
-            	{
-            	case TEAMSTATE_MAIN:
-            		handleClickTeamMain(1);
-        		break;
-            	case TEAMSTATE_ALLY:
-            		handleClickTeamAlly(1);
-            	break;
-            	case TEAMSTATE_BAN:
-            		handleClickTeamBan(1);
-            	break;
-            	case TEAMSTATE_CREATE:
-            		handleClickTeamCreate(1);
-            	break;
-            	case TEAMSTATE_RENAME:
-            		handleClickTeamRename(1);
-            	break;
-            	}
-            break;
-            case 7: //right top button
-            	switch (this.teamState)
-            	{
-            	case TEAMSTATE_MAIN:
-            		handleClickTeamMain(2);
-            	break;
-            	}
-            	break;
-            case 8: //right bottom button
-            	switch (this.teamState)
-            	{
-            	case TEAMSTATE_MAIN:
-            		handleClickTeamMain(3);
-        		break;
-            	}
-            break;
-            case 9:
-            case 10:
-            case 11:
-            	switch (this.teamState)
-            	{
-            	case TEAMSTATE_ALLY:
-            		this.listFocus = LISTCLICK_ALLY;
-                	this.listClicked[LISTCLICK_ALLY] = teamBtn - 9;
-        		break;
-            	case TEAMSTATE_BAN:
-            		this.listFocus = LISTCLICK_BAN;
-                	this.listClicked[LISTCLICK_BAN] = teamBtn - 9;
-        		break;
-            	}
-            break;
-            }//end switch
-        break;	//end team
-        case 4:     //target
-        	//update target list
-        	updateTargetClassList();
-        	
-        	int targetBtn = GuiHelper.getButton(ID.Gui.ADMIRALDESK, 4, xClick, yClick);
-        	switch (targetBtn)
-        	{
-            case 0:	//remove target
-            	int clicked = this.listNum[LISTCLICK_TARGET]+this.listClicked[LISTCLICK_TARGET];
-            	
-            	if (clicked >= 0 && clicked < this.tarList.size())
-            	{
-            		String tarstr = this.tarList.get(clicked);
-                	LogHelper.debug("DEBUG: desk: remove target class: "+tarstr);
-                	//remove clicked target
-    				CommonProxy.channelG.sendToServer(new C2SGUIPackets(player, C2SGUIPackets.PID.SetTarClass, tarstr));
-            	}
-            break;
-            case 1: //target slot
-            case 2:
-            case 3:
-            case 4:
-            case 5:
-            case 6:
-            case 7:
-            case 8:
-            case 9:
-            case 10:
-            case 11:
-            case 12:
-            case 13:
-            	this.listClicked[LISTCLICK_TARGET] = targetBtn - 1;
-            	getEntityByClick();
-            break;
-            }//end switch
-        break;  //end target
-        }//end switch
-        
-        syncTileEntityC2S();
+			//get no button in ch5, check ch2 button
+			if(getbtn2 < 0)
+			{
+				int getbtn = GuiHelper.getButton(ID.Gui.ADMIRALDESK, 2, xClick, yClick);
+				switch (getbtn)
+				{
+				case 0:	//left
+					if (mouseKey == 0)
+					{
+						this.book_pageNum--;
+					}
+					else
+					{
+						this.book_pageNum -= 10;
+					}
+					
+					if (this.book_pageNum < 0) this.book_pageNum = 0;
+		  	  		
+					setShipModel(this.book_chapNum, this.book_pageNum);
+					LogHelper.debug("DEBUG: desk: book page: "+book_pageNum);
+				break;
+				case 1: //right
+					if (mouseKey == 0)
+					{
+						this.book_pageNum++;
+					}
+					else
+					{
+						this.book_pageNum += 10;
+					}
+					
+					if (this.book_pageNum > GuiBook.getMaxPageNumber(book_chapNum))
+					{
+						this.book_pageNum = GuiBook.getMaxPageNumber(book_chapNum);
+					}
+		  	  		
+					setShipModel(this.book_chapNum, this.book_pageNum);
+					LogHelper.debug("DEBUG: desk: book page: "+book_pageNum);
+				break;
+				case 2: //chap 0
+				case 3: //chap 1
+				case 4: //chap 2
+				case 5: //chap 3
+				case 6: //chap 4
+				case 7: //chap 5
+				case 8: //chap 6
+					this.book_chapNum = getbtn - 2;
+					this.book_pageNum = 0;
+					LogHelper.debug("DEBUG: desk: book chap: "+book_chapNum);
+				break;
+				}
+			}
+			//get ship model button
+			else
+			{
+				if (this.shipModel != null)
+				{
+					switch (getbtn2)
+					{
+					case 0:  //ship model
+					break;
+					case 1:  //sit
+						this.shipModel.setSitting(!this.shipModel.isSitting());
+						
+						//roll Emotion
+						if (this.shipModel.getRNG().nextInt(2) == 0)
+						{
+							this.shipModel.setStateEmotion(ID.S.Emotion, ID.Emotion.BORED, false);
+						}
+						else
+						{
+							this.shipModel.setStateEmotion(ID.S.Emotion, ID.Emotion.NORMAL, false);
+						}
+						
+						//roll Emotion4
+						if (this.shipModel.getRNG().nextInt(2) == 0)
+						{
+							this.shipModel.setStateEmotion(ID.S.Emotion4, ID.Emotion.BORED, false);
+						}
+						else
+						{
+							this.shipModel.setStateEmotion(ID.S.Emotion4, ID.Emotion.NORMAL, false);
+						}
+					break;
+					case 2:  //run
+						this.shipModel.setSprinting(!this.shipModel.isSprinting());
+						if (this.shipMount != null) this.shipMount.setSprinting(this.shipModel.isSprinting());
+					break;
+					case 3:  //attack
+						this.shipModel.setAttackTick(50);
+						this.shipModel.setStateEmotion(ID.S.Phase, this.shipModel.getRNG().nextInt(4), false);
+						if (this.shipMount != null) this.shipMount.setAttackTick(50);
+					break;
+					case 4:  //emotion
+						//roll Emotion4
+						if (this.shipModel.getRNG().nextInt(2) == 0)
+						{
+							this.shipModel.setStateEmotion(ID.S.Emotion4, ID.Emotion.BORED, false);
+						}
+						else
+						{
+							this.shipModel.setStateEmotion(ID.S.Emotion4, ID.Emotion.NORMAL, false);
+						}
+						
+						//roll sneaking
+						this.shipModel.setSneaking(this.shipModel.getRNG().nextInt(5) == 0);
+						
+						//roll Emotion/NoFuel
+						if (this.shipModel.getRNG().nextInt(8) == 0)
+						{
+							this.shipModel.setStateFlag(ID.F.NoFuel, true);
+						}
+						else
+						{
+							this.shipModel.setStateFlag(ID.F.NoFuel, false);
+							this.shipModel.setStateEmotion(ID.S.Emotion, this.shipModel.getRNG().nextInt(10), false);
+							if (this.shipMount != null) this.shipMount.setStateEmotion(ID.S.Emotion, this.shipMount.getRNG().nextInt(10), false);
+						}
+					break;
+					case 5:  //model state 1~16
+					case 6:
+					case 7:
+					case 8:
+					case 9:
+					case 10:
+					case 11:
+					case 12:
+					case 13:
+					case 14:
+					case 15:
+					case 16:
+					case 17:
+					case 18:
+					case 19:
+					case 20:
+						this.shipModel.setStateEmotion(ID.S.State, this.shipModel.getStateEmotion(ID.S.State) ^ Values.N.Pow2[getbtn2-5], false);
+						
+						//set mounts
+						if (this.shipModel.hasShipMounts()) this.setShipMount();
+					break;
+					}//end switch
+				}//end get ship model
+			}//end get ship model page button
+		break;  //end book
+		case 3:		//team
+			int teamBtn = GuiHelper.getButton(ID.Gui.ADMIRALDESK, 3, xClick, yClick);
+			switch (teamBtn)
+			{
+			case 0:	//left top button
+				switch (this.teamState)
+				{
+				case TEAMSTATE_MAIN:
+					handleClickTeamMain(0);
+				break;
+				case TEAMSTATE_ALLY:
+					handleClickTeamAlly(0);
+				break;
+				case TEAMSTATE_BAN:
+					handleClickTeamBan(0);
+				break;
+				case TEAMSTATE_CREATE:
+					handleClickTeamCreate(0);
+				break;
+				case TEAMSTATE_RENAME:
+					handleClickTeamRename(0);
+				break;
+				}//end switch
+			break;
+			case 1: //team slot 0~4
+			case 2:
+			case 3:
+			case 4:
+			case 5:
+				this.listFocus = LISTCLICK_TEAM;
+				this.listClicked[LISTCLICK_TEAM] = teamBtn - 1;
+			break;
+			case 6: //left bottom button
+				switch (this.teamState)
+				{
+				case TEAMSTATE_MAIN:
+					handleClickTeamMain(1);
+				break;
+				case TEAMSTATE_ALLY:
+					handleClickTeamAlly(1);
+				break;
+				case TEAMSTATE_BAN:
+					handleClickTeamBan(1);
+				break;
+				case TEAMSTATE_CREATE:
+					handleClickTeamCreate(1);
+				break;
+				case TEAMSTATE_RENAME:
+					handleClickTeamRename(1);
+				break;
+				}
+			break;
+			case 7: //right top button
+				switch (this.teamState)
+				{
+				case TEAMSTATE_MAIN:
+					handleClickTeamMain(2);
+				break;
+				}
+				break;
+			case 8: //right bottom button
+				switch (this.teamState)
+				{
+				case TEAMSTATE_MAIN:
+					handleClickTeamMain(3);
+				break;
+				}
+			break;
+			case 9:
+			case 10:
+			case 11:
+				switch (this.teamState)
+				{
+				case TEAMSTATE_ALLY:
+					this.listFocus = LISTCLICK_ALLY;
+					this.listClicked[LISTCLICK_ALLY] = teamBtn - 9;
+				break;
+				case TEAMSTATE_BAN:
+					this.listFocus = LISTCLICK_BAN;
+					this.listClicked[LISTCLICK_BAN] = teamBtn - 9;
+				break;
+				}
+			break;
+			}//end switch
+		break;	//end team
+		case 4:	 //target
+			//update target list
+			updateTargetClassList();
+			
+			int targetBtn = GuiHelper.getButton(ID.Gui.ADMIRALDESK, 4, xClick, yClick);
+			switch (targetBtn)
+			{
+			case 0:	//remove target
+				int clicked = this.listNum[LISTCLICK_TARGET]+this.listClicked[LISTCLICK_TARGET];
+				
+				if (clicked >= 0 && clicked < this.tarList.size())
+				{
+					String tarstr = this.tarList.get(clicked);
+					LogHelper.debug("DEBUG: desk: remove target class: "+tarstr);
+					//remove clicked target
+					CommonProxy.channelG.sendToServer(new C2SGUIPackets(player, C2SGUIPackets.PID.SetTarClass, tarstr));
+				}
+			break;
+			case 1: //target slot
+			case 2:
+			case 3:
+			case 4:
+			case 5:
+			case 6:
+			case 7:
+			case 8:
+			case 9:
+			case 10:
+			case 11:
+			case 12:
+			case 13:
+				this.listClicked[LISTCLICK_TARGET] = targetBtn - 1;
+				getEntityByClick();
+			break;
+			}//end switch
+		break;  //end target
+		}//end switch
+		
+		syncTileEntityC2S();
 	}
 	
 	@Override
@@ -1041,8 +1041,8 @@ public class GuiDesk extends GuiContainer
 		if (dx > 20 || dx < -20 || dy > 20 || dy < -20) return;
 		
 		int gx = (int) (mx * this.GuiScaleInv - this.guiLeft);
-        int gy = (int) (my * this.GuiScaleInv - this.guiTop);
-        
+		int gy = (int) (my * this.GuiScaleInv - this.guiTop);
+		
 		//func: target list
 		if (this.guiFunc == 4 || this.guiFunc == 2)
 		{
@@ -1077,13 +1077,13 @@ public class GuiDesk extends GuiContainer
 		{
 			if(this.guiFunc != button+1)
 			{
-	    		this.guiFunc = button+1;
-	    		LogHelper.debug("DEBUG: GUI click: desk: click function button");
-	    	}
-	    	else
-	    	{
-	    		this.guiFunc = 0;
-	    	}
+				this.guiFunc = button+1;
+				LogHelper.debug("DEBUG: GUI click: desk: click function button");
+			}
+			else
+			{
+				this.guiFunc = 0;
+			}
 			
 			syncTileEntityC2S();
 		}
@@ -1121,8 +1121,8 @@ public class GuiDesk extends GuiContainer
 			int dy = 0;
 			int dz = 0;
 			int id = 0;
-			this.shipList = new ArrayList();
-			this.itemList = new ArrayList();
+			this.shipList = new ArrayList<RadarEntity>();
+			this.itemList = new ArrayList<RadarEntity>();
 			
 			//set origin position
 			if (this.type == 0)
@@ -1343,8 +1343,8 @@ public class GuiDesk extends GuiContainer
 						ix = 33;
 					break;
 					}
-    		        
-    		        drawTexturedModalRect(guiLeft+237, guiTop+texty-1, ix, 240, 11, 11);
+					
+					drawTexturedModalRect(guiLeft+237, guiTop+texty-1, ix, 240, 11, 11);
 				}
 				
 				texty += 32;
@@ -1398,23 +1398,23 @@ public class GuiDesk extends GuiContainer
 	{
 		int cirY = 0;
 		//draw team select circle
-    	if (this.listFocus == LISTCLICK_TEAM && this.listClicked[LISTCLICK_TEAM] > -1 && this.listClicked[LISTCLICK_TEAM] < 5)
-    	{
-    		cirY = 25 + this.listClicked[LISTCLICK_TEAM] * 32;
-        	drawTexturedModalRect(guiLeft+142, guiTop+cirY, 0, 192, 108, 31);
-    	}
-    	//draw ally select circle
-    	else if (this.listFocus == LISTCLICK_ALLY && this.listClicked[LISTCLICK_ALLY] > -1 && this.listClicked[LISTCLICK_ALLY] < 3)
-    	{
-    		cirY = 61 + this.listClicked[LISTCLICK_ALLY] * 31;
-        	drawTexturedModalRect(guiLeft+6, guiTop+cirY, 109, 192, 129, 31);
-    	}
-    	//draw ban select circle
-    	else if (this.listFocus == LISTCLICK_BAN && this.listClicked[LISTCLICK_BAN] > -1 && this.listClicked[LISTCLICK_BAN] < 3)
-    	{
-    		cirY = 61 + this.listClicked[LISTCLICK_BAN] * 31;
-        	drawTexturedModalRect(guiLeft+6, guiTop+cirY, 109, 192, 129, 31);
-    	}
+		if (this.listFocus == LISTCLICK_TEAM && this.listClicked[LISTCLICK_TEAM] > -1 && this.listClicked[LISTCLICK_TEAM] < 5)
+		{
+			cirY = 25 + this.listClicked[LISTCLICK_TEAM] * 32;
+			drawTexturedModalRect(guiLeft+142, guiTop+cirY, 0, 192, 108, 31);
+		}
+		//draw ally select circle
+		else if (this.listFocus == LISTCLICK_ALLY && this.listClicked[LISTCLICK_ALLY] > -1 && this.listClicked[LISTCLICK_ALLY] < 3)
+		{
+			cirY = 61 + this.listClicked[LISTCLICK_ALLY] * 31;
+			drawTexturedModalRect(guiLeft+6, guiTop+cirY, 109, 192, 129, 31);
+		}
+		//draw ban select circle
+		else if (this.listFocus == LISTCLICK_BAN && this.listClicked[LISTCLICK_BAN] > -1 && this.listClicked[LISTCLICK_BAN] < 3)
+		{
+			cirY = 61 + this.listClicked[LISTCLICK_BAN] * 31;
+			drawTexturedModalRect(guiLeft+6, guiTop+cirY, 109, 192, 129, 31);
+		}
 
 	}
 	
@@ -1828,12 +1828,12 @@ public class GuiDesk extends GuiContainer
 			rm.renderEntity(this.targetEntity, 0D, 0D, 0D, 0F, 1F, false);
 			rm.setRenderShadow(true);
 			
-	        GlStateManager.popMatrix();
-	        RenderHelper.disableStandardItemLighting();
-	        GlStateManager.disableRescaleNormal();
-	        GlStateManager.setActiveTexture(OpenGlHelper.lightmapTexUnit);
-	        GlStateManager.disableTexture2D();
-	        GlStateManager.setActiveTexture(OpenGlHelper.defaultTexUnit);
+			GlStateManager.popMatrix();
+			RenderHelper.disableStandardItemLighting();
+			GlStateManager.disableRescaleNormal();
+			GlStateManager.setActiveTexture(OpenGlHelper.lightmapTexUnit);
+			GlStateManager.disableTexture2D();
+			GlStateManager.setActiveTexture(OpenGlHelper.defaultTexUnit);
 		}
 	}//end target model
 	
@@ -1882,15 +1882,15 @@ public class GuiDesk extends GuiContainer
 	@Override
 	protected void keyTyped(char input, int keyID) throws IOException
 	{
-        if (this.textField.textboxKeyTyped(input, keyID))
-        {
-            //test
-        }
-        else
-        {
-            super.keyTyped(input, keyID);
-        }
-    }
+		if (this.textField.textboxKeyTyped(input, keyID))
+		{
+			//test
+		}
+		else
+		{
+			super.keyTyped(input, keyID);
+		}
+	}
 	
 	/** btn: 0:left top, 1:left bottom, 2:right top, 3:right bottom*/
 	private void handleClickTeamMain(int btn)
@@ -2155,8 +2155,8 @@ public class GuiDesk extends GuiContainer
 		//close gui if tile broken
 		if (this.type == 0 && this.tile == null)
 		{
-            this.mc.player.closeScreen();
-        }
+			this.mc.player.closeScreen();
+		}
 		
 		//every 64 ticks
 		if ((this.tickGUI & 63) == 0)
@@ -2223,27 +2223,27 @@ public class GuiDesk extends GuiContainer
 		shipName = ShipCalc.getEntityToSpawnName(classID);
 		
 		//set ship model
-        if (EntityList.getClassFromName(shipName) != null)
-        {
-            this.shipModel = (BasicEntityShip) EntityList.createEntityByIDFromName(new ResourceLocation(Reference.MOD_ID, shipName), player.world);
-            
-            if (this.shipModel != null)
-            {
-            	this.shipModel.setStateFlag(ID.F.NoFuel, false);
-            	this.shipType = this.shipModel.getShipType();
-    			this.shipClass = this.shipModel.getShipClass();
-    			this.shipMaxStats = this.shipModel.getStateMinor(ID.M.NumState);
-    			
-    			this.iconXY = new int[2][3];
-    			this.iconXY[0] = Values.ShipTypeIconMap.get((byte)this.shipType);
-    			this.iconXY[1] = Values.ShipNameIconMap.get(this.shipClass);
-            }
-            else
-            {
-            	this.shipMaxStats = 0;
-    			this.shipStats = 0;
-            }
-        }
+		if (EntityList.getClassFromName(shipName) != null)
+		{
+			this.shipModel = (BasicEntityShip) EntityList.createEntityByIDFromName(new ResourceLocation(Reference.MOD_ID, shipName), player.world);
+			
+			if (this.shipModel != null)
+			{
+				this.shipModel.setStateFlag(ID.F.NoFuel, false);
+				this.shipType = this.shipModel.getShipType();
+				this.shipClass = this.shipModel.getShipClass();
+				this.shipMaxStats = this.shipModel.getStateMinor(ID.M.NumState);
+				
+				this.iconXY = new int[2][3];
+				this.iconXY[0] = Values.ShipTypeIconMap.get((byte)this.shipType);
+				this.iconXY[1] = Values.ShipNameIconMap.get(this.shipClass);
+			}
+			else
+			{
+				this.shipMaxStats = 0;
+				this.shipStats = 0;
+			}
+		}
 	}
 	
 	private void setShipMount()
@@ -2313,77 +2313,77 @@ public class GuiDesk extends GuiContainer
 			}
 			
 			try
-	    	{
-		        //draw type icon
-		        Minecraft.getMinecraft().getTextureManager().bindTexture(guiNameIcon0);
-		        
-		        drawTexturedModalRect(guiLeft+23, guiTop+53, this.iconXY[0][0], this.iconXY[0][1], 28, 28);
-		        
-		        //draw name icon
-	        	int offx = 0;
-	        	int offy = 0;
-	        	
-	        	if (iconXY[1][0] < 100)
-	            {
-	            	Minecraft.getMinecraft().getTextureManager().bindTexture(guiNameIcon1);
-	            	if (iconXY[1][0] == 4) offy = -10;
-	            }
-	            else
-	            {
-	            	Minecraft.getMinecraft().getTextureManager().bindTexture(guiNameIcon2);
-	            	if (iconXY[1][0] == 6) offy = -10;
-	            	else offy = 10;
-	            }
-	        	
+			{
+				//draw type icon
+				Minecraft.getMinecraft().getTextureManager().bindTexture(guiNameIcon0);
+				
+				drawTexturedModalRect(guiLeft+23, guiTop+53, this.iconXY[0][0], this.iconXY[0][1], 28, 28);
+				
+				//draw name icon
+				int offx = 0;
+				int offy = 0;
+				
+				if (iconXY[1][0] < 100)
+				{
+					Minecraft.getMinecraft().getTextureManager().bindTexture(guiNameIcon1);
+					if (iconXY[1][0] == 4) offy = -10;
+				}
+				else
+				{
+					Minecraft.getMinecraft().getTextureManager().bindTexture(guiNameIcon2);
+					if (iconXY[1][0] == 6) offy = -10;
+					else offy = 10;
+				}
+				
 				drawTexturedModalRect(guiLeft+30+offx, guiTop+94+offy, this.iconXY[1][1], this.iconXY[1][2], 11, 59);
-	    	}
-	    	catch (Exception e)
-	    	{
-	    		LogHelper.info("Exception : desk GUI: get name icon fail "+e);
-	    	}
+			}
+			catch (Exception e)
+			{
+				LogHelper.info("Exception : desk GUI: get name icon fail "+e);
+			}
 			
-        	//tick time
-        	int modelTicking = this.tickGUI % 3;
-        	if (modelTicking == 0)
-        	{
-        		this.shipModel.ticksExisted++;
-            	if (this.shipModel.getAttackTick() > 0) this.shipModel.setAttackTick(this.shipModel.getAttackTick()-1);
-            	
-            	//set moving motion
-            	if (this.shipModel.isSprinting())
-            	{
-            		this.shipModel.travel(1F, 0f, 0F);
-            	}
-            	else
-            	{
-            		this.shipModel.prevSwingProgress = 0F;
-            		this.shipModel.swingProgress = 0F;
-            		this.shipModel.prevLimbSwingAmount = 0F;
-            		this.shipModel.limbSwingAmount = 0F;
-            	}
-            	
-            	if (this.shipMount != null)
-            	{
-            		this.shipMount.ticksExisted++;
-            		
-                	if (this.shipMount.getAttackTick() > 0) this.shipMount.setAttackTick(this.shipMount.getAttackTick() - 1);
-                	
-                	//set mount moving motion
-                	if (this.shipMount.isSprinting())
-                	{
-                		this.shipMount.travel(1F, 0f, 0F);
-                	}
-                	else
-                	{
-                		this.shipMount.prevSwingProgress = 0F;
-                		this.shipMount.swingProgress = 0F;
-                		this.shipMount.prevLimbSwingAmount = 0F;
-                		this.shipMount.limbSwingAmount = 0F;
-                	}
-            	}
-        	}
-        	
-        	RenderManager rm = Minecraft.getMinecraft().getRenderManager();
+			//tick time
+			int modelTicking = this.tickGUI % 3;
+			if (modelTicking == 0)
+			{
+				this.shipModel.ticksExisted++;
+				if (this.shipModel.getAttackTick() > 0) this.shipModel.setAttackTick(this.shipModel.getAttackTick()-1);
+				
+				//set moving motion
+				if (this.shipModel.isSprinting())
+				{
+					this.shipModel.travel(1F, 0f, 0F);
+				}
+				else
+				{
+					this.shipModel.prevSwingProgress = 0F;
+					this.shipModel.swingProgress = 0F;
+					this.shipModel.prevLimbSwingAmount = 0F;
+					this.shipModel.limbSwingAmount = 0F;
+				}
+				
+				if (this.shipMount != null)
+				{
+					this.shipMount.ticksExisted++;
+					
+					if (this.shipMount.getAttackTick() > 0) this.shipMount.setAttackTick(this.shipMount.getAttackTick() - 1);
+					
+					//set mount moving motion
+					if (this.shipMount.isSprinting())
+					{
+						this.shipMount.travel(1F, 0f, 0F);
+					}
+					else
+					{
+						this.shipMount.prevSwingProgress = 0F;
+						this.shipMount.swingProgress = 0F;
+						this.shipMount.prevLimbSwingAmount = 0F;
+						this.shipMount.limbSwingAmount = 0F;
+					}
+				}
+			}
+			
+			RenderManager rm = Minecraft.getMinecraft().getRenderManager();
 			int x = this.guiLeft + 72;
 			int y = this.guiTop + 110;
 			
@@ -2429,18 +2429,18 @@ public class GuiDesk extends GuiContainer
 			
 			rm.setRenderShadow(true);
 			
-	        GlStateManager.popMatrix();
-	        RenderHelper.disableStandardItemLighting();
-	        GlStateManager.disableRescaleNormal();
-	        GlStateManager.setActiveTexture(OpenGlHelper.lightmapTexUnit);
-	        GlStateManager.disableTexture2D();
-	        GlStateManager.setActiveTexture(OpenGlHelper.defaultTexUnit);
+			GlStateManager.popMatrix();
+			RenderHelper.disableStandardItemLighting();
+			GlStateManager.disableRescaleNormal();
+			GlStateManager.setActiveTexture(OpenGlHelper.lightmapTexUnit);
+			GlStateManager.disableTexture2D();
+			GlStateManager.setActiveTexture(OpenGlHelper.defaultTexUnit);
 		}
 		//no ship
 		else
 		{
 			Minecraft.getMinecraft().getTextureManager().bindTexture(guiBook2);
-	    	drawTexturedModalRect(guiLeft+20, guiTop+48, 0, 148, 87, 108);
+			drawTexturedModalRect(guiLeft+20, guiTop+48, 0, 148, 87, 108);
 		}
 	}
 	

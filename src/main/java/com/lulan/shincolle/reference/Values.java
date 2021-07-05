@@ -1039,7 +1039,7 @@ public class Values
 	 *      for item icon: 4:iconID
 	 *    
 	 */
-	public static final Map<Integer, List> BookList = Collections.unmodifiableMap(new HashMap<Integer, List>()
+	public static final Map<Integer, List<int[]>> BookList = Collections.unmodifiableMap(new HashMap<Integer, List<int[]>>()
 	{{
 		//chap 0: introduction
 		//page 0
