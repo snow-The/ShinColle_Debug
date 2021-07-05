@@ -2223,9 +2223,10 @@ public class GuiDesk extends GuiContainer
 		shipName = ShipCalc.getEntityToSpawnName(classID);
 		
 		//set ship model
-		if (EntityList.getClassFromName(shipName) != null)
+		ResourceLocation location = new ResourceLocation(Reference.MOD_ID, shipName);
+		if (EntityList.getClass(location) != null)
 		{
-			this.shipModel = (BasicEntityShip) EntityList.createEntityByIDFromName(new ResourceLocation(Reference.MOD_ID, shipName), player.world);
+			this.shipModel = (BasicEntityShip) EntityList.createEntityByIDFromName(location, player.world);
 			
 			if (this.shipModel != null)
 			{
