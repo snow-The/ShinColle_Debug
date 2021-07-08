@@ -22,7 +22,7 @@ import net.minecraft.util.NonNullList;
  *    13: 8-inch Long Range Twin Cannon
  *    14: 15-inch Quadruple Cannon
  *    15: 12-inch Triple Cannon
- *    16: 18.11-inch Triple Cannon
+ *    16: 46cm Triple Cannon
  */
 public class EquipCannon extends BasicEquip
 {
